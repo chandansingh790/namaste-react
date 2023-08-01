@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import {FETCH_SWIGGY_API} from '../utils/constants.js';
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
 	const [resLists, setResLists] = useState([]);
@@ -12,9 +14,7 @@ const Body = () => {
 		api_request();
 	}, []);
 	const api_request = async () => {
-		const data = await fetch(
-			"https://gofoodsserver.onrender.com/api/restaurants/?lat=12.9715987&lng=77.5945627"
-		);
+		const data = await fetch(FETCH_SWIGGY_API);
 		const json = await data.json();
 		console.log(json);
 		setResLists(
@@ -25,6 +25,16 @@ const Body = () => {
 		);
 		console.log(resLists);
 	};
+
+	
+	const onlineStatus = useOnlineStatus();
+	console.log(onlineStatus);
+	if (onlineStatus === false) {
+		return (
+			<h1>Looks like your are ofline. Kindly check your internet connection</h1>
+		);
+	}
+
 	if (resLists.length === 0) {
 		return <Shimmer />;
 	}
