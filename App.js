@@ -1,4 +1,4 @@
-import {React, lazy, Suspense} from "react";
+import {React, lazy, Suspense, useEffect, useState} from "react";
 import ReactDOM from "react-dom/client";
 import Header from './src/components/Header';
 import Body from './src/components/Body';
@@ -6,18 +6,36 @@ import '/index.css'
 import About from "./src/components/About";
 import Contact from "./src/components/Contact";
 import Error from "./src/components/Error";
-import RestaurantMenu from "./src/components/RestaurantMenu";
+// import RestaurantMenu from "./src/components/RestaurantMenu";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import UserContext from "./src/utils/UserContext";
 
 const Grocery = lazy(() => import('./src/components/Grocery'));
+const RestaurantMenu = lazy(() => import("./src/components/RestaurantMenu"));
 
 const AppLayout = () => {
-    return (
-        <div className="app">
-            <Header />
-			<Outlet />
-        </div>
-    )
+	// Authentication Code APi
+
+	// React provides a context Provider to update the data of the created context, By this we can update the created context data.
+	// And for this the App should be wrapped inside Provider
+	const [userName, SetUserName] = useState();
+
+	useEffect(() => {
+		const data = {
+			name: "Chandan Singh",
+		};
+		SetUserName(data.name);
+	}, []);
+	console.log(userName);
+
+	return (
+		<UserContext.Provider value={{ loggedInUser: userName, SetUserName }}>
+			<div className="app">
+				<Header />
+				<Outlet />
+			</div>
+		</UserContext.Provider>
+	);
 }
 
 const routingPath = createBrowserRouter([
@@ -47,7 +65,11 @@ const routingPath = createBrowserRouter([
 			},
 			{
 				path: "/restaurant/:resId",
-				element: <RestaurantMenu />,
+				element: (
+					<Suspense fallback={<h1>Loading..</h1>}>
+						<RestaurantMenu />
+					</Suspense>
+				),
 			},
 		],
 		errorElement: <Error />,

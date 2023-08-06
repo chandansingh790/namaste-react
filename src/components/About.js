@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import UserContext from "../utils/UserContext";
+
 const About = () => {
+	const { loggedInUser } = useContext(UserContext);
+	console.log(loggedInUser);
     return (
 			<div className="about">
 				<h1>About Us</h1>
@@ -14,6 +19,7 @@ const About = () => {
 					more recently with desktop publishing software like Aldus PageMaker
 					including versions of Lorem Ipsum.
 				</p>
+				<h2 className="my-3 font-bold">{loggedInUser}</h2>
 			</div>
 		);
 }

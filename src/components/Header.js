@@ -1,15 +1,19 @@
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { useState, useContext } from "react";
+import UserContext from '../utils/UserContext';
 
 const Header = () => {
 	const onlineStatus = useOnlineStatus();
+	const [LoginBtn, setLoginBtn] = useState("LogIn");
+
+	const {loggedInUser} = useContext(UserContext); 
     return (
-			<div className="header">
-				<div className="logo-container">
-					{/* <img className="logo" src={logo}></img> */}
+			<div className="flex justify-between bg-[#234E70] shadow-md shadow-black-100/30">
+				<div className="ml-14">
 					<svg
-						className="logo"
-						height="49"
+						className="ml-10 pt-6"
+						height="74"
 						viewBox="-7.3 3.6 2520.1 3702.8"
 						width="34"
 						xmlns="http://www.w3.org/2000/svg"
@@ -21,21 +25,38 @@ const Header = () => {
 					</svg>
 				</div>
 				<div className="nav-items">
-					<ul>
-						<li>User Status : {onlineStatus == false ? "🔴" : "✅"}</li>
-						<li>
+					<ul className="flex m-4 p-4">
+						<li className="mr-8 text-white">
+							User Status : {onlineStatus == false ? "🔴" : "✅"}
+						</li>
+						<li className="mr-8 text-white">
 							<Link to="/">Home</Link>
 						</li>
-						<li>
+						<li className="mr-8 text-white">
 							<Link to="/about">About</Link>
 						</li>
-						<li>
+						<li className="mr-8 text-white">
 							<Link to="/contact">Contact</Link>
 						</li>
-						<li>
+						<li className="mr-8 text-white">
 							<Link to="/grocery">Grocery</Link>
 						</li>
-						<li>Cart</li>
+						<li className="mr-8 text-white">Cart</li>
+						<button
+							onClick={() => {
+								if (LoginBtn === "LogIn") {
+									setLoginBtn("Logout");
+								} else {
+									setLoginBtn("LogIn");
+								}
+								/* LoginBtn === "LogIn"
+								? setLoginBtn("Logout")
+								: setLoginBtn("LogIn") */
+							}}
+							className="px-4 size bg-[#8b4513] border-2 border-slate-500 ... rounded-lg w-20 text-white hover:bg-[#7e3a09]"
+						>
+							{LoginBtn}
+						</button>
 					</ul>
 				</div>
 			</div>

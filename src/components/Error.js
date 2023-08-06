@@ -3,7 +3,6 @@ import error from '/image/error.jpg';
 
 const Error = () => {
     const errorMsg = useRouteError();
-    console.log(errorMsg);
     return (
 			<div className="error-page">
 				<span className="error-msg">{errorMsg.data}</span>
