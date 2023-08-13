@@ -18,6 +18,7 @@ const RestaurantMenu = () => {
 		name,
 		sla,
 		totalRatingsString,
+		areaName,
 	} = restaurant?.cards[0]?.card?.card?.info;
 	/* const { itemCards } =
 		restaurant?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
@@ -35,7 +36,8 @@ const RestaurantMenu = () => {
 			<div className=" p-2 flex justify-between bg-gray-50">
 				<div>
 					<h1 className="font-bold text-lg">{name}</h1>
-					<span className="text-gray-400">{cuisines.join(", ")}</span>
+					<span className="text-gray-500">{cuisines.join(", ")}</span>
+					<h3 className="text-gray-500">{areaName}</h3>
 				</div>
 				<div className="border rounded-md p-1">
 					<span className="text-lg font-bold flex text-green-600">

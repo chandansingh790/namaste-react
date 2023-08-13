@@ -3,7 +3,6 @@ import UserContext from "../utils/UserContext";
 
 const About = () => {
 	const { loggedInUser } = useContext(UserContext);
-	console.log(loggedInUser);
     return (
 			<div className="about">
 				<h1>About Us</h1>
